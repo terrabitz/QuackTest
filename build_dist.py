@@ -3,7 +3,6 @@ import shutil
 import os
 import platform
 import zipfile
-import gzip
 import tarfile
 import argparse
 import time
@@ -65,7 +64,13 @@ if __name__ == '__main__':
     for binary in binaries_to_build:
         print("Building " + binary + " onedir")
         binary_path = os.path.sep.join([path_to_bin, binary])
-        main_args = ["pyinstaller", binary_path, "--log-level", "ERROR"]
+        binary_basename = binary.rsplit(".", maxsplit=1)[0]
+        platform_basename = binary_basename
+        if platform.system() == "Windows":
+            platform_basename += '_win'
+        elif platform.system() == "Linux":
+            platform_basename += "_linux"
+        main_args = ["pyinstaller", binary_path, "--log-level", "ERROR", "-n", platform_basename]
 
         # Add the no-console flag to pyinstaller if the build is on Windows for the gui version
         extra_args = []
@@ -84,12 +89,10 @@ if __name__ == '__main__':
         logging.debug("Onefile build command line: " + " ".join(onefile_args))
         process = subprocess.Popen(onefile_args)
         process.wait()
-        binary_basename = binary.rsplit(".", maxsplit=1)[0]
-
         if platform.system() == "Windows":
-            zip_dir(path_to_dist_dir=path_to_platform_dist, zip_filename_base=binary_basename)
+            zip_dir(path_to_dist_dir=path_to_platform_dist, zip_filename_base=platform_basename)
         elif platform.system() == "Linux":
-            gzip_dir(path_to_dist_dir=path_to_platform_dist, gzip_filename_base=binary_basename)
+            gzip_dir(path_to_dist_dir=path_to_platform_dist, gzip_filename_base=platform_basename)
 
     print("Finished")
     # Add dist files to git
