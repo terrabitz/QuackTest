@@ -1,0 +1,7 @@
+Current Tasks
+
+Possible Feature Improvements
+* Add support for VNC/remote desktop/ssh GUI
+* add alternate platform building
+* add exporting capabilities to inject.bin, teensy, and arduino
+* add basic keyboard shortcuts (e.g. CTRL-S, CTRL-Z)

@@ -1,0 +1,17 @@
+
+.idea/vcs.xml
+.idea/workspace.xml
+QuackTest/__pycache__/
+__pycache__/
+/build/
+/cli.spec
+/testscript.duck
+/hello_world.duck
+/quacktest.spec
+.idea
+.idea/inspectionProfiles/
+.idea/markdown-navigator.xml
+.idea/markdown-navigator/
+quacktest-gui.spec
+cloc-1.64.exe
+dist
