@@ -119,13 +119,16 @@ if __name__ == '__main__':
 
     # Prepare all files for release
     print("Preparing release")
+    release_dir = os.path.join(os.getcwd(), "release")
+    print(release_dir)
+    os.mkdir(release_dir)
     for root, dirs, files in os.walk(top=path_to_dist):
-        release_dir = os.path.join(os.getcwd(), "release")
-        if not os.path.exists(release_dir):
-            os.mkdir(release_dir)
         for file in files:
-            shutil.move(os.path.join(root, file), release_dir)
-        shutil.move(release_dir, path_to_dist)
+            file_path = os.path.join(root, file)
+            print("Copying " + file_path + " into releases folder")
+            shutil.copy(file_path, release_dir)
+
+    shutil.move(release_dir, path_to_dist)
 
     print("Finished")
     # Add dist files to git
