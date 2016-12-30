@@ -40,7 +40,7 @@ onto your system.
 
 ## Building
 
-Optionally, you can also use build binaries precompiled for
+Optionally, you can also use build or use binaries precompiled for
 your target environment. This is especially useful if you want to deploy
 QuackTest onto a fresh environment, without needing to install all
 its dependencies. You can make these using the included `build_dist.py`

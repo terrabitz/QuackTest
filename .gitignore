@@ -15,3 +15,6 @@ __pycache__/
 quacktest-gui.spec
 cloc-1.64.exe
 dist
+quacktest-gui_win.spec
+quacktest_win.spec
+/creds.py
