@@ -37,7 +37,7 @@ def parse_args():
 
 def archive_dir(path_to_dist_dir, zip_filename_base, method):
     path_to_files = os.path.sep.join([path_to_dist_dir, zip_filename_base])
-    handle = shutil.make_archive(zip_filename_base, method, root_dir=path_to_files, logger=logger)
+    handle = shutil.make_archive(zip_filename_base, method, root_dir=path_to_files)
     shutil.move(handle, path_to_dist_dir)
     shutil.rmtree(path_to_files)
 
@@ -123,7 +123,7 @@ if __name__ == '__main__':
         release_dir = os.path.join(os.getcwd(), "release")
         os.mkdir(release_dir)
         for file in files:
-            shutil.move(file, release_dir)
+            shutil.move(os.path.join(root, file), release_dir)
         shutil.move(release_dir, path_to_dist)
 
     print("Finished")
