@@ -6,7 +6,6 @@ import tarfile
 import argparse
 import time
 import logging
-from fabric.api import run, local, cd, settings, get
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())
@@ -63,6 +62,7 @@ if __name__ == '__main__':
     args = parse_args()
     if args.build_linux:
         import creds
+        from fabric.api import run, local, cd, settings, get
 
         build_on_linux(creds.LINUX_ADDRESS, creds.LINUX_USERNAME, creds.LINUX_PASSWORD)
 
