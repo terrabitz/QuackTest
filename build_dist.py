@@ -19,6 +19,12 @@ def build_on_linux(linux_address, linux_username, linux_password):
                                 "-u", linux_username,
                                 "build"])
     process.wait()
+    process = subprocess.Popen(["fab",
+                                "-H", linux_address,
+                                "-p", linux_password,
+                                "-u", linux_username,
+                                "fetch"])
+    process.wait()
 
 
 def parse_args():
