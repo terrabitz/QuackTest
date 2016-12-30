@@ -49,7 +49,7 @@ def zip_dir(path_to_dist_dir, zip_filename_base):
 
 def gzip_dir(path_to_dist_dir, gzip_filename_base):
     print("tarring and gzipping releases")
-    archive_dir(path_to_dist_dir, gzip_filename_base, method="targz")
+    archive_dir(path_to_dist_dir, gzip_filename_base, method="gztar")
 
 
 if __name__ == '__main__':
@@ -116,6 +116,15 @@ if __name__ == '__main__':
 
         print("Starting build on remote Linux machine")
         build_on_linux(creds.LINUX_ADDRESS, creds.LINUX_USERNAME, creds.LINUX_PASSWORD)
+
+    # Prepare all files for release
+    print("Preparing release")
+    for root, dirs, files in os.walk(top=path_to_dist):
+        release_dir = os.path.join(os.getcwd(), "release")
+        os.mkdir(release_dir)
+        for file in files:
+            shutil.move(file, release_dir)
+        shutil.move(release_dir, path_to_dist)
 
     print("Finished")
     # Add dist files to git
