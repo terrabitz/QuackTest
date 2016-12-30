@@ -12,23 +12,13 @@ logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.DEBUG)
 
 
-def build():
-    code_dir = "/tmp/QuackTest"
-    with settings(warn_only=True):
-        if run("test -d {}".format(code_dir)).failed:
-            run("git clone https://github.com/terrabitz/QuackTest/ {}".format(code_dir))
-    with cd(code_dir):
-        run("git pull")
-        run("python build_dist.py")
-        get(remote_path="/tmp/QuackTest/dist/linux", local_path=os.path.join(os.getcwd(), "dist", "linux"))
-
-
 def build_on_linux(linux_address, linux_username, linux_password):
-    local("fab -f " + os.path.realpath(__file__) +
-          " -H " + linux_address +
-          " -p " + linux_password +
-          " -u " + linux_username +
-          " build")
+    process = subprocess.Popen(["fab",
+                                "-H", linux_address,
+                                "-p", linux_password,
+                                "-u", linux_username,
+                                "build"])
+    process.wait()
 
 
 def parse_args():
@@ -39,32 +29,25 @@ def parse_args():
     return arg_parser.parse_args()
 
 
+def archive_dir(path_to_dist_dir, zip_filename_base, method):
+    path_to_files = os.path.sep.join([path_to_dist_dir, zip_filename_base])
+    handle = shutil.make_archive(zip_filename_base, method, root_dir=path_to_files, logger=logger)
+    shutil.move(handle, path_to_dist_dir)
+    shutil.rmtree(path_to_files)
+
+
 def zip_dir(path_to_dist_dir, zip_filename_base):
     print("Zipping files")
-    # root_dir = os.getcwd()
-    path_to_files = os.path.sep.join([path_to_dist_dir, zip_filename_base])
-    # os.chdir(path_to_dist_dir)
-    # zip_file = zipfile.ZipFile(os.path.sep.join([path_to_dist_dir, zip_filename_base]) + ".zip", mode="w")
-    handle = shutil.make_archive(zip_filename_base, "zip", root_dir=path_to_files, logger=logger)
-    shutil.move(handle, path_to_dist_dir)
-    # os.chdir(root_dir)
+    archive_dir(path_to_dist_dir, zip_filename_base, method="zip")
 
 
 def gzip_dir(path_to_dist_dir, gzip_filename_base):
     print("tarring and gzipping releases")
-    path_to_files = os.path.sep.join([path_to_dist_dir, gzip_filename_base])
-    tar_file_name = path_to_files + ".tar.gz"
-    with tarfile.open(name=tar_file_name, mode="w:gz") as tar_file:
-        tar_file.add(path_to_files)
+    archive_dir(path_to_dist_dir, gzip_filename_base, method="targz")
 
 
 if __name__ == '__main__':
     args = parse_args()
-    if args.build_linux:
-        import creds
-        from fabric.api import run, local, cd, settings, get
-
-        build_on_linux(creds.LINUX_ADDRESS, creds.LINUX_USERNAME, creds.LINUX_PASSWORD)
 
     # Remove build directory if it exists
     path_to_build = os.path.sep.join([os.getcwd(), "build"])
@@ -121,6 +104,12 @@ if __name__ == '__main__':
             zip_dir(path_to_dist_dir=path_to_platform_dist, zip_filename_base=platform_basename)
         elif platform.system() == "Linux":
             gzip_dir(path_to_dist_dir=path_to_platform_dist, gzip_filename_base=platform_basename)
+
+    if args.build_linux:
+        import creds
+
+        print("Starting build on remote Linux machine")
+        build_on_linux(creds.LINUX_ADDRESS, creds.LINUX_USERNAME, creds.LINUX_PASSWORD)
 
     print("Finished")
     # Add dist files to git
