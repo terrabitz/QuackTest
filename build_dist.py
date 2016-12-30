@@ -121,7 +121,8 @@ if __name__ == '__main__':
     print("Preparing release")
     for root, dirs, files in os.walk(top=path_to_dist):
         release_dir = os.path.join(os.getcwd(), "release")
-        os.mkdir(release_dir)
+        if not os.path.exists(release_dir):
+            os.mkdir(release_dir)
         for file in files:
             shutil.move(os.path.join(root, file), release_dir)
         shutil.move(release_dir, path_to_dist)
