@@ -24,7 +24,7 @@ script:
   - bash ./build.sh
   
 before_deploy:
-  - export FILE_TO_UPLOAD=$(ls dist/*)
+  - export FILE_TO_UPLOAD=$(ls dist/* | tr "\n" ":")
 
 deploy:
   provider: releases
