@@ -10,9 +10,9 @@ foreach ($bin in $bins) {
 
     Write-Host "Starting compilation of $($bin.Name) into $newName"
     if ($bin.BaseName -like "*gui*") {
-        pyinstaller -F $bin.PSPath -n $newName -w
+        pyinstaller -F $bin.FullName -n $newName -w
     } else {
-        pyinstaller -F $bin.PSPath -n $newName
+        pyinstaller -F $bin.FullName -n $newName
     }
 }
 
