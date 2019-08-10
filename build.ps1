@@ -8,10 +8,11 @@ foreach ($bin in $bins) {
         $newName = "$($bin.BaseName)-build${env:APPVEYOR_BUILD_VERSION}_win"
     }
 
+    Write-Host "Starting compilation of $($bin.Name) into $newName"
     if ($bin.BaseName -like "*gui*") {
-        pyinstaller -F ($bin.PSPath) -n $newName -w
+        pyinstaller -F $bin.PSPath -n $newName -w
     } else {
-        pyinstaller -F ($bin.PSPath) -n $newName
+        pyinstaller -F $bin.PSPath -n $newName
     }
 }
 

@@ -37,7 +37,19 @@ special_key_dict = {
     "PRINTSCREEN": "printscreen",
     "SCROLLLOCK": "scrolllock",
     "SPACE": " ",
-    "TAB": "tab"
+    "TAB": "tab",
+    "F1": "f1",
+    "F2": "f2",
+    "F3": "f3",
+    "F4": "f4",
+    "F5": "f5",
+    "F6": "f6",
+    "F7": "f7",
+    "F8": "f8",
+    "F9": "f9",
+    "F10": "f10",
+    "F11": "f11",
+    "F12": "f12",
 }
 
 
@@ -80,7 +92,8 @@ class QuackTester:
             time_to_delay = int(delay_time) / 1000
             return time_to_delay
         except ValueError as e:
-            raise ValueError("DELAY command run with " + delay_time + " as argument")
+            raise ValueError("DELAY command run with " +
+                             delay_time + " as argument")
 
     def replay(self, replay_num):
         try:
@@ -88,7 +101,8 @@ class QuackTester:
             for i in range(replay_num_int):
                 self.interpret_line(self.last_line)
         except ValueError as e:
-            raise ValueError("REPLAY command run with " + replay_num + " as argument")
+            raise ValueError("REPLAY command run with " +
+                             replay_num + " as argument")
 
     def rem(self, comment):
         self.logger.debug("Received comment: " + comment)
@@ -139,7 +153,8 @@ class QuackTester:
             try:
                 self.interpret_line(line.strip())
             except Exception as e:
-                self.logger.error("Error found at line " + str(index) + ": " + str(e))
+                self.logger.error("Error found at line " +
+                                  str(index) + ": " + str(e))
                 if soft_errors:
                     pass
                 else:
