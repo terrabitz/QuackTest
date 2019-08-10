@@ -1,6 +1,6 @@
 Write-Host "Starting Build"
 
-$bins = Get-ChildItem -Path ./bin -Include "*.py"
+$bins = Get-ChildItem bin
 foreach ($bin in $bins) {
     if ($env:APPVEYOR_REPO_TAG -eq "true") {
         $newName = "$($bin.BaseName)-${env:APPVEYOR_REPO_TAG_NAME}_win"
