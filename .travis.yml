@@ -28,9 +28,7 @@ before_deploy:
 
 deploy:
   provider: releases
-  api_key:
-    - secure: "TqhA8rspj+oTlGm5FmXt3oJef9VGtLP5skX+kzlOO4v4LQJVoY2v+IeLHtNYu9Qq+NjoHUOsZVAdj85bNMhR94zWmDn3Y7vQYO3udxCWDahiv0GcBcrfPKc9CzycuCq460MxrezPFNUchY2+oYQQms3N3TS2fERg4Gpk/T5EWxWP/zcBCfQLpmChuD16QT6ww3o9lHvEwMoJAMn62rWIjlvzO+rrKSouou8CjKf9ZyOppAcLlkjYUYDqgfa3JotZOa9ssTMrP6YyRH6jfpsBlaLm+GU1B4qTJNnYgewSHuwKNmS9BarbwnuXglMw0oBWmD58XwgI+7xtNPdpCYt028f5Q78EIPoyWWcXVRYQ3ke9x3NdmWH4v5JXmx34lrc3bk7amYYXctLboQJJkal6emwLgz3kDdPho9wkvjBFKpXwSIFsEkulHMtgZAwVdnX+X5FxqRwbUTxmMvwRcO/teFb/JqUU8GrfpTYdIZVml2E0Zad8ESqvi7TevALxPBgD/YGD07sEheFPCBL1uyZw44YD2c0XB/iDPeM0pa8yIHqyJ3UIZo7iGKHf+DChefX8Ge9mCmZgM/fVg8AwyuDaDjT0MTewSCOo2IEPCB0q+QW7f6nfrhiWYpbnuRQ/4vgTw/oazAbYtCZMXkbghianTkzUzGhuMn56YpsuoGH1T44="
-  file_glob: true
+  api_key: "${GITHUB_KEY}"
   file: "${FILE_TO_UPLOAD}"
   skip_cleanup: true
   draft: true
