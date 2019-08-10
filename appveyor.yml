@@ -49,14 +49,14 @@ build_script:
 
 artifacts:
   - path: /dist/*.exe
-    name: PyinstallerTestExe
+    name: BuildOutput
 
 deploy:
   description: 'This is just a test'
   provider: GitHub
   auth_token:
     secure: TGBEeIpw9ZL8SLhN4rpx6fo9LVr1QZfzbxj/Zl8gKa32+MVyykoXM4gwUnuY1Zna # your encrypted token from GitHub
-  artifact: PyinstallerTestExe
+  artifact: BuildOutput
   draft: true
   prerelease: false
   on:
