@@ -18,3 +18,4 @@ dist
 quacktest-gui_win.spec
 quacktest_win.spec
 /creds.py
+venv

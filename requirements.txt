@@ -1,2 +1,2 @@
-pyautogui
+pyautogui==0.9.46
 image

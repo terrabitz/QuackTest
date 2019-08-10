@@ -1,0 +1,43 @@
+language: python            # this works for Linux but is an error on macOS or Windows
+matrix:
+  include:
+    - name: "Python 3.7.1 on Xenial Linux"
+      python: 3.7           # this works for Linux but is ignored on macOS or Windows
+      dist: xenial   
+    - name: "Python 3.7.2 on macOS"
+      os: osx
+      osx_image: xcode10.2  # Python 3.7.2 running on macOS 10.14.3
+      language: shell       # 'language: python' is an error on Travis CI macOS
+
+addons:
+  artifacts:
+    paths:
+      - $(ls ./dist/* | tr "\n" ":")
+
+env:
+ global:
+  - secure: "JpWaszi9FVvUbWg2fI1xDPgjEM3g8znLQJctwYxgVaBvySHRAlISw2x1DtHXqVdQ1oTpCLGJpO24yB+F5ktLNfKqf7Ic527Tt2NBQo83gkrgaiM0mN66kdZCMRBhC8im+AOD8ygNDrPa1fLnb7I5jV+JZSSeHBXuUXdLZh7aAjc+gDF/2sCL3RXLGzVLO2eyjdAHM3Kl4DMgOA2DXfrYZmjouEaCdhCofoFsbvHFKVClAzKeZ7yPB1tIUZVyPNbUXUr9+W+KT4C5iEQXu7ycpOLW4hgPwZAvLQUYKIsQRZH3SYMsWRlWY3hY/uLWPiiejKKCV+BJs/wK+BmDEXbcRU1HY5x7zej5VfiV5I+S2RHBu7NEg1+AsZS2JX3lGGt3KUshOhiFXuctQdrfP8acVwKD+bpEBi6eF0yuPGIqTE8zcuW4WMXulQmyOKxoutNeR8v0u+/SW8koIJ5bcNZ9zaGwtxJdh3tz/ys+/RVSkt2yujq5CN0HdH7ES4y4tin1Jk7fQLqUG6uqZD6XNr8P6SBbhYYOzoPVuT/Z7LWluaZ179iVLpoJDBxIXJyPQmh3z2GA6/qmIwmw041yuH5zjYdsuGP13vf3YuLcbd0/a5whlpEbuZfvu862d4pAsjCywzba7QAtE6WJz1H9C3WeKASWN3i1Ntbgirb4Zd2IILA="
+  - secure: "SPrHa2ryy8fRuq14Mm5BkAv0McguDgHqD3jOStrYVjH0xDgsJ2L37XXhkS1f1SDbYJRovqQFQj1utr1OHHbZYq29mJtDhQmJDUk0rm5yXq71Q/ob88KIrq13NSWzdZj3f9mU5jltEU7RYjFZGrn9yFD/1RtVbpXYjQaJ4EPiki2iMR6LqI/0aHvUiFQyhs6ZLskVO2a67DDwAA7VkAKjhxxKCUvhYFpTo/i+eLHEf5O5X1q03v4by03pAVuAptDz1JMe94Vaw49naq5rT/7Eny0+LtS9TPyUNUdDP5dsQBgKud4NZX4tGnSDnDr0KbLfix9ucrh2O9p4S5cWwZ26+UPiGkurMdxesa3GQVHOVMK394y1/WNV/DqZErJSMtLLnI/UIB8uF4clpXtGdzgbKIIup8C0ltg3k/CnjUHAUjsF4X4OyzxbZf/q4knNNK1OE1MovsoKWDb/OPlvFHi+YxQU5Cgb1Tlgs69dPihz96Pz7mnwpNcfZ1QucdrMpPWTj+ViQf5GLd9OAtme8ahF4IKHm3DK5Fp90aRXMXrzDUhlDMPbBa+kLo8w7llHshIf0FOjeUUuPpqpUeubsguv2l+hjqGBphV75NAwGxGEUzS8G84btHGx2wc/w7Vh5OZzV9YJWl3j9c4G0GWbsK8GPd0dtle61YFnV0TG2cUzzNo="
+  - secure: "tzHx5nRZY3kBKejMr/HLY1O4rP+R14pfau8Fe2uxTEMM29HuiVZHF0QcYNFJ7zldSoUk69hwAcPuMCVUJv+BeL9kdAPR9xSvKs659d+CWHA9ETOFdDsr6611Z9JQ6wlvXqlg7KjusErNCtFZzQQQ4Axxtyh404SZ+mK5Q/Quawoaav3jJniXynrAZbuONwncicsNFD8ag7hEIWUlugA2rvgJJ7UB+ODj0/72OIK0i5SIczEacOvrgVR7ykAasA2PU7Y5lYaGR4hUFVLQjy+S7Yil1O6Zy7R+GaOCCVRLE4YZMw4kTf2Ys6DTgKhpQpX5dOKgUX1f0Dixp3EAauK9TqHGT9gm1jYGpCavLFnLetjf8NXX/W2mFKoFK8G2hUGiHtXxSV0VCtWt7C14iWbGK7jFW3P0lGpbhDqtTaSiPsLHgr49+FTj6JQPpBwclgaKvygfs87djgwqJ92csYPUMYFvhGqJbYkhRdCSW2JnEPf4u/Zd9YGlZzBT7ZwEA0o80+eG3Ff+rAIJWYDs7Lbn3sJliAcj9J3X/syiu0zyBE/9kr8FdCm8zt6RHNpegvrzjon83OawMIr613uD0M4cvRYA1tIE1+yo4jAz4xZ16AOoHg9vYehszPOWQi4YKkYmMw9Emn6/EuyLJj5wZHmavXk+2S/h6iI3obR7yBJuOSA="
+
+install:
+  - pip3 install --upgrade pip
+  - pip3 install -r dev-requirements.txt
+  - python3 --version
+
+script:
+  - ./build.sh
+  
+before_deploy:
+  - export FILE_TO_UPLOAD=$(ls dist/*)
+
+deploy:
+  provider: releases
+  api_key:
+    - secure: "hJaO3097yKJPRF4+7D45PPmo9nLXncp/MTCA5/+sRlQ1vC2LY4f84AsIU85fh2v1M2awvbnL5VEWfohIRarF2XrD5P8ge8om0F0rPLc8R+vCOFzOQccutxAbk4xFAJS+2OIjOgPwzJqxa8dVG74RsSskWjruDykYTMXJJO5XSva6UUoEaZtKy1nJJABJtgwFvlbaEHOyrbvOAVs7MOcZJ6keRfKSa02jxwt+mWZion3fNQIuUZJOJO77k84ruTWgf9uHxiSxHX/MxWe+KQc/A8IV7HApq4cNpq3Z50GRMuNCzdM1CRURZq3nGnb1RkGX0Mw7cqJbo0YaRksGp0pG4EH2uVWyBBUtuoUoWVK9UnWHA++s1soMOd6tAXF4Da95UsNAfj3X7hrvUR5wDT1SlMxL88o/KpW5GJyiP9+U6Tpanh+bmASOo1eDfhl8aQajmI7RUEoe+QS1a3Kw9VUnOkupa33rucQ31fDjRj5gqhCoM2kx6Kl+SjivV7HR9XxVAwC4wjwOdMLIX6reUEC65XpUzy6q1Din1rThtzldg5F8mwm2U2emqe+gP1Xnz3BEWbCn6HH0ZCo/abWsotgQydT0twyJi6IP3gOMCGcHYH6rayXsu8giDwsrCWBcZ2nVKYPJoLvCa6/Bydzg8DW3ltIcJA4Q+IJ0wdwMdhjcpAI="
+  file_glob: true
+  file: "${FILE_TO_UPLOAD}"
+  skip_cleanup: true
+  draft: true
+  on:
+    tags: true
