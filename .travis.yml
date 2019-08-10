@@ -22,14 +22,12 @@ install:
 
 script:
   - bash ./build.sh
-  
-before_deploy:
-  - export FILE_TO_UPLOAD=$(ls dist/* | tr "\n" ":")
 
 deploy:
   provider: releases
   api_key: "${GITHUB_KEY}"
-  file: "${FILE_TO_UPLOAD}"
+  file_glob: true
+  file: dist/*
   skip_cleanup: true
   draft: true
   on:
